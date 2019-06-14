@@ -34,7 +34,7 @@ package Railway with SPARK_Mode is
       end record;
 
    Segment_State : Segment_State_Type := (others => Free);
-   Signal_State : Signal_State_Type := (others => Red);
+   Signal_State : Signal_State_Type := (others => Green);
 
    function Correct_Signals return Boolean
    is

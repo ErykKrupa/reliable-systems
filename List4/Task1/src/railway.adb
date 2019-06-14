@@ -6,19 +6,20 @@ package body Railway with SPARK_Mode is
    is
    begin
       Success := False;
-      if (Route = Route_Enter_Left) then
+      case Route is
+      when Route_Enter_Left =>
          if (Segment_State.Left = Free) then
             Segment_State.Left := Reserved_Moving_From_Left;
             Success := True;
          end if;
 
-      elsif (Route = Route_Leave_Left) then
+      when Route_Leave_Left =>
          if (Segment_State.Left = Occupied_Standing) then
             Segment_State.Left := Occupied_Moving_Left;
             Success := True;
          end if;
 
-      elsif (Route = Route_Left_Middle) then
+      when Route_Left_Middle =>
          if (Segment_State.Left = Occupied_Standing
              and Segment_State.Middle = Free) then
             Segment_State.Left := Occupied_Moving_Right;
@@ -27,7 +28,7 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Middle_Left) then
+      when Route_Middle_Left =>
          if (Segment_State.Middle = Occupied_Standing
              and Segment_State.Left = Free) then
             Segment_State.Middle := Occupied_Moving_Left;
@@ -36,7 +37,7 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Middle_Right) then
+      when Route_Middle_Right =>
          if (Segment_State.Middle = Occupied_Standing
              and Segment_State.Right = Free) then
             Segment_State.Middle := Occupied_Moving_Right;
@@ -45,7 +46,7 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Right_Middle) then
+      when Route_Right_Middle =>
          if (Segment_State.Right = Occupied_Standing
              and Segment_State.Middle = Free) then
             Segment_State.Right := Occupied_Moving_Left;
@@ -54,37 +55,38 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Leave_Right) then
+      when Route_Leave_Right =>
          if (Segment_State.Right = Occupied_Standing) then
             Segment_State.Right := Occupied_Moving_Right;
             Success := True;
          end if;
 
-      elsif (Route = Route_Enter_Right) then
+      when Route_Enter_Right =>
          if (Segment_State.Right = Free) then
             Segment_State.Right := Reserved_Moving_From_Right;
             Success := True;
          end if;
-      end if;
+      end case;
    end Open_Route;
 
    procedure Move_Train (Route: in Route_Type; Success: out Boolean)
    is
    begin
       Success := False;
-      if (Route = Route_Enter_Left) then
+      case Route is
+      when Route_Enter_Left =>
          if (Segment_State.Left = Reserved_Moving_From_Left) then
             Segment_State.Left := Occupied_Standing;
             Success := True;
          end if;
 
-      elsif (Route = Route_Leave_Left) then
+      when Route_Leave_Left =>
          if (Segment_State.Left = Occupied_Moving_Left) then
             Segment_State.Left := Free;
             Success := True;
          end if;
 
-      elsif (Route = Route_Left_Middle) then
+      when Route_Left_Middle =>
          if (Segment_State.Left = Occupied_Moving_Right
              and Segment_State.Middle = Reserved_Moving_From_Left) then
             Segment_State.Left := Free;
@@ -93,7 +95,7 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Middle_Left) then
+      when Route_Middle_Left =>
          if (Segment_State.Middle = Occupied_Moving_Left
              and Segment_State.Left = Reserved_Moving_From_Right) then
             Segment_State.Middle := Free;
@@ -102,7 +104,7 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Middle_Right) then
+      when Route_Middle_Right =>
          if (Segment_State.Middle = Occupied_Moving_Right
              and Segment_State.Right = Reserved_Moving_From_Left) then
             Segment_State.Middle := Free;
@@ -111,7 +113,7 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Right_Middle) then
+      when Route_Right_Middle =>
          if (Segment_State.Right = Occupied_Moving_Left
              and Segment_State.Middle = Reserved_Moving_From_Right) then
             Segment_State.Right := Free;
@@ -120,17 +122,17 @@ package body Railway with SPARK_Mode is
             Success := True;
          end if;
 
-      elsif (Route = Route_Leave_Right) then
+      when Route_Leave_Right =>
          if (Segment_State.Right = Occupied_Moving_Right) then
             Segment_State.Right := Free;
             Success := True;
          end if;
 
-      elsif (Route = Route_Enter_Right) then
+      when Route_Enter_Right =>
          if (Segment_State.Right = Reserved_Moving_From_Right) then
             Segment_State.Right := Occupied_Standing;
             Success := True;
          end if;
-      end if;
+      end case;
    end Move_Train;
 end Railway;
